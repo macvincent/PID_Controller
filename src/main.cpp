@@ -16,12 +16,12 @@ void run_simlation();
 void twiddle(PID &);
 
 int main() {
-  twiddle_gains = false; //toggle for simulation
+  std::vector<std::thread> threads;
+  twiddle_gains = false; //toggle for twiddle optimization
+  if(twiddle_gains) 
+  threads.push_back(std::thread(twiddle, std::ref(pid))); ///modify value of pid argument based on controller to be tuned
   run_simlation();
-  if(twiddle_gains){
-    std::thread t(twiddle, std::ref(pid)); ///modify value of pid argument based on controller to be tuned
-    t.join();
-  }
+  threads[0].join();
 }
 
 void run_simlation(){
@@ -60,7 +60,7 @@ void run_simlation(){
                       ws.send(reset_msg.data(), reset_msg.length(), uWS::OpCode::TEXT);
                   }
                   if(iterations > 50){
-                      error += pow(speed_error,2); //modify error based on what is to be tuned
+                      error += pow(cte,2); //modify error based on what is to be tuned
                   }
                   iterations++;
                   if(iterations == 500){
