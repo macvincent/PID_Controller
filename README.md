@@ -12,13 +12,13 @@ A PID controller control flow consists of `Error -> PID Controller -> Output`
 As the name suggests, a PID controller consists of three parts that all work in different ways to ensure we get to our get:
 
 * Proportional Controller: In this project, the `CTE` represented the cross-track-error, which is the lateral distance from our car to a reference trajectory. The goal of the proportional controller is to steer the car in proportion to the `CTE`. To do this it makes use of a predetermined gain parameter, `Kp`, which helps to maintain this proportionality.
-<center style="text-align: center">Output = Kp * CTE</center>
+<div style="text-align: div">Output = Kp * CTE</div>
 
 * Integral Controller: In an instance when the wheels of the car are not in alignment, that is when we have a systematic error, our car deviates more from the goal as time progresses. This can be corrected by keeping track of an integral of the `CTE`and multiplying it by a gain constant `Ki`.
-<center style="text-align: center">Output = Ki * Summation(CTE)</center>
+<div style="text-align: div">Output = Ki * Summation(CTE)</div>
 
 * Differential Controller: Even after making use of the two controllers mentioned above, we still notice that our car never quite converges at a reference point. It achieves marginal stability as it oscillates around the reference point. To account for this error and to ensure the system, or car, gets to the reference point we keep track of the differential of the `CTE` per unit time and multiply it by a gain constant `Kd`.
-<center style="text-align: center">Output = Kd * d(CTE)/dt</center>
+<div style="text-align: div">Output = Kd * d(CTE)/dt</div>
 
 The PID controller is a summation of the outputs of each individual controller.
 
