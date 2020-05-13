@@ -12,32 +12,40 @@ A PID controller control flow consists of `Error -> PID Controller -> Output`
 As the name suggests, a PID controller consists of three parts that all work in different ways to ensure we get to our get:
 
 * Proportional Controller: In this project, the `CTE` represented the cross-track-error, which is the lateral distance from our car to a reference trajectory. The goal of the proportional controller is to steer the car in proportion to the `CTE`. To do this it makes use of a predetermined gain parameter, `Kp`, which helps to maintain this proportionality.
-<div style="text-align: div">Output = Kp * CTE</div>
-
+```
+Output = Kp * CTE
+```
 * Integral Controller: In an instance when the wheels of the car are not in alignment, that is when we have a systematic error, our car deviates more from the goal as time progresses. This can be corrected by keeping track of an integral of the `CTE`and multiplying it by a gain constant `Ki`.
-<div style="text-align: div">Output = Ki * Summation(CTE)</div>
-
+```
+Output = Ki * Summation(CTE)
+```
 * Differential Controller: Even after making use of the two controllers mentioned above, we still notice that our car never quite converges at a reference point. It achieves marginal stability as it oscillates around the reference point. To account for this error and to ensure the system, or car, gets to the reference point we keep track of the differential of the `CTE` per unit time and multiply it by a gain constant `Kd`.
-<div style="text-align: div">Output = Kd * d(CTE)/dt</div>
+
+``` 
+Output = Kd * d(CTE)/dt
+```
 
 The PID controller is a summation of the outputs of each individual controller.
 
 ## Tuning
 I started with initial gains which were not accurate.
-
+```
 |         |         |
 |---------|---------|
 |`Kp`     |0.06     |
 |`Ki`     | 0.000001     |
 |`Kd`     |1.5   |
+```
 
 Making use of the twiddle (Coordinate descent) algorithm implemented in the `twiddle()` function in `helper.h`, I was able to tune those gains based on their RMSE (Root Mean Square Error) gotten from each run of the simulator to obtain
+```
 |         |         |
 |---------|---------|
 |`Kp`     |0.285395     |
 |`Ki`     | 0.0028573     |
 |`Kd`     |3.14895    |
 
+```
 ## Dependencies
 
 * cmake >= 3.5
