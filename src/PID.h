@@ -1,6 +1,6 @@
 #ifndef PID_H
 #define PID_H
-
+#include<vector>
 class PID {
  public:
   /**
@@ -24,14 +24,13 @@ class PID {
    * @param cte The current cross track error
    */
   void UpdateError(double cte);
-
+  void Set(std::vector<double>, std::vector<double>);
   /**
    * Calculate the total PID error.
    * @output The total PID error
    */
   double TotalError();
 
- private:
   /**
    * PID Errors
    */
