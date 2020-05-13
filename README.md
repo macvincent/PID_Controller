@@ -28,21 +28,27 @@ Output = Kd * d(CTE)/dt
 The PID controller is a summation of the outputs of each individual controller.
 
 ## Tuning
-I started with initial gains which were not accurate.
+For the steer_angle and speed PID Contollers, I started with initial gains which were not accurate.
 
 |         |         |
 |---------|---------|
 |`Kp`     |0.06     |
-|`Ki`     | 0.000001     |
+|`Ki`     | 0.000001 |
 |`Kd`     |1.5   |
 
-Making use of the twiddle (Coordinate descent) algorithm implemented in the `twiddle()` function in `helper.h`, I was able to tune those gains based on their RMSE (Root Mean Square Error) gotten from each run of the simulator to obtain
+Making use of the twiddle (Coordinate descent) algorithm implemented in the `twiddle()` function, I was able to tune the gains for the steer_angle controller based on their RMSE (Root Mean Square Error) gotten from each run of the simulator to obtain:
 |         |         |
 |---------|---------|
-|`Kp`     |0.285395     |
-|`Ki`     | 0.0028573     |
+|`Kp`     |0.285395 |
+|`Ki`     | 0.0028573 |
 |`Kd`     |3.14895    |
 
+For the speed PID controller, after tuning with the `twiddle()` function I obtained:
+|         |         |
+|---------|---------|
+|`Kp`     |1.06     |
+|`Ki`     | 1e-06   |
+|`Kd`     |0.5      |
 ## Dependencies
 
 * cmake >= 3.5
