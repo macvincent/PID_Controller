@@ -29,23 +29,20 @@ The PID controller is a summation of the outputs of each individual controller.
 
 ## Tuning
 I started with initial gains which were not accurate.
-```
+
 |         |         |
 |---------|---------|
 |`Kp`     |0.06     |
 |`Ki`     | 0.000001     |
 |`Kd`     |1.5   |
-```
 
 Making use of the twiddle (Coordinate descent) algorithm implemented in the `twiddle()` function in `helper.h`, I was able to tune those gains based on their RMSE (Root Mean Square Error) gotten from each run of the simulator to obtain
-```
 |         |         |
 |---------|---------|
 |`Kp`     |0.285395     |
 |`Ki`     | 0.0028573     |
 |`Kd`     |3.14895    |
 
-```
 ## Dependencies
 
 * cmake >= 3.5
