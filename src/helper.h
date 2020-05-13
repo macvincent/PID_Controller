@@ -120,6 +120,9 @@ void run_simlation(uWS::Hub& h, PID& pid){
       h.run();
 }
 
+/**
+ * Tune parameters based on RMSE
+ */
 void twiddle(){
   std::unique_lock<std::mutex> lck(mtx);
   while (!updated)cv.wait(lck);
@@ -134,10 +137,10 @@ void twiddle(){
   int count = 0;
   while(true){
       if(count == 5)break;
-        count++;
-      std::cout << count << " " << best_error<< std::endl;
-      std::cout << pi[0] << ' ' << pi[1] << ' ' << pi[2] << std::endl;
-      std::cout << dp[0] << ' ' << dp[1] << ' ' << dp[2] << std::endl;
+      count++;
+      // std::cout << count << " " << best_error<< std::endl;
+      // std::cout << pi[0] << ' ' << pi[1] << ' ' << pi[2] << std::endl;
+      // std::cout << dp[0] << ' ' << dp[1] << ' ' << dp[2] << std::endl;
       for(int i = 0; i < 3; i++){
         // select errors and parameters to be updated
         pi[i] += dp[i];
