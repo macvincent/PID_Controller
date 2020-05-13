@@ -18,6 +18,10 @@ void twiddle(PID &);
 int main() {
   std::vector<std::thread> threads;
   twiddle_gains = false; //toggle for twiddle optimization
+  //   pid.Init(0.06, 0.000001, 1.5); //Initial values before twinddle optimization
+  pid_throt.Init(1.06, 1e-06, 0.5); //Values from twiddle optimization
+  pid.Init(0.285395, 0.0028573, 3.14895 ); //Values from twiddle optimization
+
   if(twiddle_gains) 
   threads.push_back(std::thread(twiddle, std::ref(pid))); ///modify value of pid argument based on controller to be tuned
   run_simlation();
@@ -28,11 +32,6 @@ void run_simlation(){
   uWS::Hub h;
   int iterations = 0;
   double desired_speed = 30;
-
-//   pid.Init(0.06, 0.000001, 1.5); //Initial values before twinddle optimization
-  pid_throt.Init(1.06, 1e-06, 0.5); //Values from twiddle optimization
-  pid.Init(0.285395, 0.0028573, 3.14895 ); //Values from twiddle optimization
-
   h.onMessage([&](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, 
                       uWS::OpCode opCode) {
           // "42" at the sStart of the message means there's a websocket message event.
@@ -63,8 +62,8 @@ void run_simlation(){
                       error += pow(cte,2); //modify error based on what is to be tuned
                   }
                   iterations++;
-                  if(iterations == 500){
-                      error /= 500;
+                  if(iterations == 100){
+                      error /= 100;
                       updated = true;
                       cv.notify_all();
                   }
